@@ -1,0 +1,21 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+    <div id="post-list-header" class="card border-secondary mb-3">
+    </div>
+
+    <div id="post-list-pagination">
+    </div>
+
+    <div id="post-list-container">
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/main.js' %}"></script>
+    <script src="{% static 'network/following_posts.js' %}"></script>
+{% endblock %}

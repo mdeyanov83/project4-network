@@ -1,0 +1,80 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block head %}
+    <meta name="following" content="{{ following }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="card mb-3 user-profile-container" style="max-width: 540px;">
+        <div class="row g-0">
+            <div id="profile-picture-container" class="col-md-4">
+                <img id="profile-picture" src="{{viewed_user.profile_picture}}" class="img-fluid rounded-start">
+
+                {% if user.is_authenticated and user.username == viewed_user.username %}
+                    <button id="upload-image-button" style="position: absolute; left: 0" hidden>Upload</button>
+                    <input type="file" id="file-input" style="display: none" accept="image/*">
+                {% endif %}
+
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">User Profile Page</h5>
+                    <p class="card-text">Username: {{ viewed_user.username }}</p>
+                    <p class="card-text">Email address: {{ viewed_user.email }}</p>
+                    <p class="card-text">Last logged in: {{ viewed_user.last_login }}</p>
+                    <p class="card-text" id="followers-count">Followers: {{ viewed_user.followers_total }}</p>
+                    <p class="card-text" id="following-count">Following: {{ viewed_user.follows_total }}</p>
+
+                    {% if user.is_authenticated and user.username != viewed_user.username %}
+                        {% if following %}
+                            <button id="follow-button" data-value="unfollow">Unfollow</button>
+                        {% else %}
+                            <button id="follow-button" data-value="follow">Follow</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_authenticated and user.username == viewed_user.username %}
+        <hr>
+        <form id=new-post-form method="POST">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="post-body" class="form-label"><h4>New Post</h4></label>
+                        <textarea class="form-control" name="post-body" id="post-body" rows="3" required placeholder="Write a new post..."></textarea>
+                    </div>
+                    <div id="new-post-form-error" class="mb-3" style="color: red"></div>
+                    <button type="submit" class="btn btn-primary" id="create-post">Post</button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+
+    <hr>
+
+    <div id="post-list-header" class="card border-secondary mb-3">
+    </div>
+
+    <div id="post-list-pagination">
+    </div>
+
+    <div id="post-list-container">
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/main.js' %}"></script>
+    <script src="{% static 'network/user_profile.js' %}"></script>
+    <script>
+        const viewed_username = "{{ viewed_user.username }}"
+    </script>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+        <form id=new-post-form method="POST">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="post-body" class="form-label"><h4>New Post</h4></label>
+                        <textarea class="form-control" name="post-body" id="post-body" rows="3" required placeholder="Write a new post..."></textarea>
+                    </div>
+                    <div id="new-post-form-error" class="mb-3" style="color: red"></div>
+                    <button type="submit" class="btn btn-primary" id="create-post">Post</button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+
+    <hr>
+
+    <div id="post-list-header" class="card border-secondary mb-3">
+    </div>
+
+    <div id="post-list-pagination">
+    </div>
+
+    <div id="post-list-container">
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/main.js' %}"></script>
+    <script src="{% static 'network/all_posts.js' %}"></script>
+{% endblock %}
